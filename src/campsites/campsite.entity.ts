@@ -1,5 +1,5 @@
-import { Reservation } from "src/reservations/reservation.entity";
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Reservation } from 'src/reservations/reservation.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Campsite {
@@ -18,6 +18,6 @@ export class Campsite {
   @Column('decimal', { precision: 10, scale: 6 })
   longitude: number;
 
-  @OneToMany(() => Reservation, reservation => reservation.campsite)
+  @OneToMany(() => Reservation, (reservation) => reservation.campsite)
   reservations: Reservation[];
 }
