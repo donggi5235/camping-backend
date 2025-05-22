@@ -1,10 +1,12 @@
-import { Injectable } from "@nestjs/common";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+import { UsersService } from '../users/users.service';
+
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UsersService) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.userService.findByEmail(email);

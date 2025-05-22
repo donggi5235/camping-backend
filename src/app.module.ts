@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,13 +10,17 @@ import { ChatModule } from './chat/chat.module';
 import { AuthModule } from './auth/auth.module';
 import { MapModule } from './map/map.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { SharedModule } from './shared/shared.module';
+import { validate } from './env.validation';
+import { UsersModule } from './users/users.module';
+
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
+      port: parseInt(process.env.DB_PORT, 10),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
@@ -28,7 +33,13 @@ import { NotificationsModule } from './notifications/notifications.module';
     AuthModule,
     MapModule,
     NotificationsModule,
-    ScheduleModule.forRoot()
+    ScheduleModule,
+    SharedModule,
+    UsersModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validate,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
